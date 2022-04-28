@@ -83,6 +83,7 @@ def main():
         print("Done!")
         time.sleep(5)
         os.system("cls")
+        os.system('clear')
     elif mode == "2":
         message = input("Message to encode [?]: ")
         message_bytes = message.encode('ascii')
@@ -113,6 +114,7 @@ def main():
         print("Done!")
         time.sleep(5)
         os.system("cls")
+        os.system('clear')
     elif mode == "3":
         s = input("Message to decode [?]: ")
         to = open(f'{input("Name of dictionary [?]: ")}.nog', "r")
@@ -138,6 +140,7 @@ def main():
         print("Done")
         time.sleep(5)
         os.system("cls")
+        os.system("clear")
     else:
         print("Wrong")
     main()
