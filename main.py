@@ -21,11 +21,9 @@ def main():
             json.dump(op, r, indent=4)
             r.close()
         file = input("Input file name for utf-8 characters\nDon't include extension\n[?]: ")
-        if os.path.exists(f"{file}.txt"):
-            ()
-        else:
-            open(f"{file}.txt", "w")
-        r = open(f"{file}.txt", "a", encoding="utf-8")
+        if not os.path.exists(str(file) + ".txt"):
+            open(str(file) + ".txt", "x")
+        r = open(str(file) + ".txt", "a", encoding="utf-8")
         y = 0
         gen = input("Input number of utf-8 characters to gen\nAt least 5k is needed, don't put more than 50k\n[?]: ")
         for i in range(32, 0x110000):
@@ -39,7 +37,7 @@ def main():
                 ()
         charz = []
         r.close()
-        u = open(f"{file}.txt", "r", encoding="utf-8")
+        u = open(str(file) + ".txt", "r", encoding="utf-8")
         for char in u.readlines():
             if char not in charz:
                 charz.append(char)
@@ -47,7 +45,7 @@ def main():
                 ()
         text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ=1234567890/+"
         print("Generating encoder values")
-        ap = open(f"index.json", "r+", encoding="utf-8")
+        ap = open("index.json", "r+", encoding="utf-8")
         a = json.loads(ap.read())
         for char in text:
             for char1 in text:
@@ -58,13 +56,13 @@ def main():
                 except:
                     ()
                 jsonn = {
-                    f"{char}{char1}": f"{t}"
+                    "{0}{1}".format(str(char), str(char1)): str(t)
                 }
-                a[f"p"].update(jsonn)
+                a["p"].update(jsonn)
         print("Generating decoder values")
         for x in a['p']:
             jsonn = {
-                f"{a['p'][x]}": f"{x}"
+                str(a['p'][x]): str(x)
             }
             a["t"].update(jsonn)
         ap.seek(0)
@@ -75,7 +73,7 @@ def main():
         binary_file_data = binary_file_data.encode('utf-8')
         base64_encoded_data = base64.b64encode(binary_file_data)
         s = base64_encoded_data.decode('utf-8')
-        uu = open(f"{input('Name of dictionary [?]: ')}.nog", "w")
+        uu = open(str(input('Name of dictionary [?]: ')) + ".nog", "w")
         uu.write(s)
         uu.close()
         bfile.close()
@@ -89,7 +87,7 @@ def main():
         message_bytes = message.encode('ascii')
         base64_bytes = base64.b64encode(message_bytes)
         s = base64_bytes.decode('ascii')
-        to = open(f'{input("Name of dictionary [?]: ")}.nog', "r")
+        to = open(str(input('Name of dictionary [?]: ')) + ".nog", "r")
         td = to.read()
         b = td.encode('ascii')
         base64_bytes = base64.b64decode(b)
@@ -102,22 +100,25 @@ def main():
             try:
                 y = s[:2]
                 try:
-                    newstr = newstr + chr(int(t['p'][f'{y}']))
+                    newstr = newstr + chr(int(t['p'][str(y)]))
                 except:
-                    newstr = newstr + t['p'][f'{y}']
+                    newstr = newstr + t['p'][str(y)]
                 s = s[2:]
             except Exception as E:
                 tt = False
         with open("text.txt", "w", encoding="utf-8") as d:
             d.write(newstr)
-        print(newstr)
+        try:
+            print(newstr)
+        except:
+            ()
         print("Done!")
         time.sleep(5)
         os.system("cls")
         os.system('clear')
     elif mode == "3":
         s = input("Message to decode [?]: ")
-        to = open(f'{input("Name of dictionary [?]: ")}.nog', "r")
+        to = open(str(input('Name of dictionary [?]: ')) + ".nog", "w")
         td = to.read()
         b = td.encode('utf-8')
         base64_bytes = base64.b64decode(b)
@@ -130,7 +131,7 @@ def main():
             try:
                 y = s[:1]
                 s = s[1:]
-                newstr = newstr + t['t'][f'{y}']
+                newstr = newstr + t['t'][str(y)]
             except Exception as E:
                 ()
         b = newstr.encode('ascii')
